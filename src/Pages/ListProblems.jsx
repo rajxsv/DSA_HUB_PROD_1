@@ -5,9 +5,9 @@ import { GreenAlert } from "../componenets/GreenAlert";
 import Loader from "../componenets/Loader";
 import { useUser } from "../UserContext";
 
-const params = new URLSearchParams(document.location.search);
 
 export default function NewListProblems() {
+  const params = new URLSearchParams(document.location.search);
   const [showAlert, setShowAlert] = useState(false);
   const [message, setMessage] = useState();
   const [problems, setProblems] = useState();

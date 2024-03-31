@@ -22,7 +22,7 @@ export default function Discuss() {
     try {
       await totalPostsNeurela();
       const take = pageSize;
-      const skip = (page - 1) * pageSize;
+      const skip = (page - 1)*pageSize;
       const url = `https://ap-south-1.aws.neurelo.com/rest/posts?take=${take}&skip=${skip}`;
       await axios
         .get(url, {
