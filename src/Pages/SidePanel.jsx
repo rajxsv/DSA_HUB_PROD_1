@@ -10,9 +10,11 @@ export default function Navbar() {
     <nav className="bg-black p-2">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center justify-between w-3/5">
-          <div className="text-white text-2xl focus:bg-gray-900 p-2 rounded-md">
-            {"</>"}
-          </div>
+          <Link to={"/"}>
+            <div className="text-white text-2xl focus:bg-gray-900 p-2 rounded-md">
+              {"</>"}
+            </div>
+          </Link>
           <div className="space-x-4">
             <Link
               to="/"

@@ -38,7 +38,7 @@ function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-gray-900 p-6 rounded-lg shadow-md border-rainbow">
               <h3 className="text-xl text-white font-semibold mb-2 text-gray">
-                Open Surce
+                Open Source
               </h3>
               <p className="text-gray-400">
                 No More Locked Problems and Premium Features.
