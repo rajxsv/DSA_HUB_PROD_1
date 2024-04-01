@@ -12,11 +12,8 @@ import List from "./Pages/ListProblems";
 import Problems from "./Pages/Problem";
 import AddProblem from "./Pages/AddProblem";
 import EditProblem from "./Pages/EditProblem";
-import Login from "./Pages/Login";
-import SignUp from "./Pages/SignUp";
 import Discuss from "./Pages/Discuss";
 import AddPost from "./Pages/AddPost";
-import User from "./Pages/User";
 
 const router = createBrowserRouter([
   {
@@ -26,14 +23,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Landing />
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
       },
       {
         path: "/content/list?",
@@ -58,9 +47,6 @@ const router = createBrowserRouter([
       {
         path: "/discuss/addpost",
         element: <AddPost />,
-      },{
-        path: "/user",
-        element: <User />
       }
     ],
   }

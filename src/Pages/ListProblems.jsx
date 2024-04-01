@@ -14,7 +14,6 @@ export default function NewListProblems() {
   const [totalProblems, setTotalProblems] = useState();
   const [page, setPage] = useState(params.get("page") || 1);
   const [pageSize, setPageSize] = useState(10);
-  const { user } = useUser();
   const [search, setSearch] = useState(params.get("query"));
   const navigate = useNavigate();
   const url = useParams();
@@ -98,6 +97,7 @@ export default function NewListProblems() {
   };
 
   useEffect(() => {
+    setProblems(null)
     const load = async () => {
       if (search) {
         await handleSearch();

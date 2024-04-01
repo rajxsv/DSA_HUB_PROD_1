@@ -1,14 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useUser } from "../UserContext";
+import Loader from "../componenets/Loader";
+import { GreenAlert } from "../componenets/GreenAlert";
 
 export default function AddPost() {
   const [showAlert, setShowAlert] = useState(false);
+  const [load, setLoad] = useState(false);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const { user } = useUser();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoad(true);
     try {
       axios
         .post(
@@ -17,7 +21,6 @@ export default function AddPost() {
             user: user._id,
             title,
             body,
-            v:2
           },
           {
             headers: {
@@ -26,16 +29,28 @@ export default function AddPost() {
             },
           }
         )
-        .then(() => alert("done"))
+        .then(() => {
+          setShowAlert(true);
+          timeoutFn();
+        })
         .catch((err) => {
           console.log(err);
         });
     } catch (error) {
       alert(error);
     }
+    setLoad(false);
+  };
+  
+  const timeoutFn = () => {
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2 * 1000);
   };
 
-  return (
+  return load ? (
+    <Loader />
+  ) : (
     <div className="w-full flex justify-center">
       <form className="w-4/5 flex flex-col mt-9" onSubmit={handleSubmit}>
         <div className="space-y-12">

@@ -10,27 +10,11 @@ import { useUser } from "../UserContext";
 import axios from "axios";
 
 export default function UserPostCard({
-  handleLike,
-  handleDislike,
-  handleDelete,
   key,
   data,
 }) {
-  const { id, user, likes, dislikes, title, body } = data;
-  const loggedInUser = useUser().user;
-  const [likesofPost, setLikesOfPost] = useState(0);
-  const [dislikesOfPost, setDislikesOfPost] = useState(0);
+  const { id, user, title, body } = data;
   const [flag, setFlag] = useState(false);
-
-  const count = (mode) => {
-    let count = 0;
-    let array = likesofPost;
-    if (mode == 0) {
-      array = dislikesOfPost;
-    }
-    array.forEach((item) => (count += item.post == id));
-    return count;
-  };
 
   useEffect(() => {
     try {
@@ -112,27 +96,6 @@ export default function UserPostCard({
                 </svg>
               </Button>
             </a>
-            <button
-              className="bg-green-100 text-green-900 text-[0.8rem] p-1 rounded-md px-2"
-              onClick={() => () => {
-                setFlag(!flag);
-                handleLike(id, user._id);
-              }}
-            >
-              Like
-            </button>{" "}
-            <p className="flex flex-col justify-center">
-              {likesofPost && count(1)}
-            </p>
-            <button
-              className="bg-red-100 text-red-900 p-1 px-2 rounded-md text-[0.8rem]"
-              onClick={() => handleDislike(id, user._id)}
-            >
-              Dislike
-            </button>{" "}
-            <p className="flex flex-col justify-center">
-              {dislikesOfPost && count(0)}
-            </p>
           </div>
         </CardFooter>
       </Card>
@@ -144,37 +107,11 @@ export default function UserPostCard({
         <div>
           <div className="font-extrabold text-2xl flex justify-between">
             <div>{title}</div>
-            <div>
-              {loggedInUser._id == user._id && (
-                <button
-                  onClick={() => handleDelete(_id)}
-                  className="w-min text-sm rounded-lg text-red-300 p-2"
-                >
-                  Delete
-                </button>
-              )}
-            </div>
           </div>
           <div>{user.username}</div>
           <div></div>
         </div>
         <div className="max-h-20 overflow-hidden">{body}</div>
-        <div className="flex gap-2">
-          <button
-            className="bg-green-100 text-green-900 text-[0.8rem] p-1 rounded-md px-2"
-            onClick={() => handleLike(_id, user._id)}
-          >
-            Like
-          </button>{" "}
-          <p className="flex flex-col justify-center">{likes.length}</p>
-          <button
-            className="bg-red-100 text-red-900 p-1 px-2 rounded-md text-[0.8rem]"
-            onClick={() => handleDislike(_id, user._id)}
-          >
-            Dislike
-          </button>{" "}
-          <p className="flex flex-col justify-center">{dislikes.length}</p>
-        </div>
       </div>
     )
   );

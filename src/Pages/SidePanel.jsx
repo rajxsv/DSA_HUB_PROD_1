@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext";
-import NavUser from "./NavUser";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -35,9 +33,6 @@ export default function Navbar() {
               Discuss
             </Link>
           </div>
-        </div>
-        <div className="flex justify-end">
-          <NavUser />
         </div>
       </div>
     </nav>

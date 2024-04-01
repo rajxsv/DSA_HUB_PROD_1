@@ -4,8 +4,6 @@ import { useState } from "react";
 import { GreenAlert } from "../componenets/GreenAlert";
 import { useNavigate } from "react-router-dom";
 
-const user = JSON.parse(localStorage.getItem("userData"));
-
 export default function AddProblem() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");

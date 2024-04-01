@@ -12,9 +12,9 @@ export default function Discuss() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
   const [totalPosts, setTotalPosts] = useState();
-  const { user } = useUser();
 
   useEffect(() => {
+    setPosts(null);
     fetchAllPosts_Neurelo();
   }, [deleted, likesAndDislikes, page, pageSize]);
 
@@ -22,7 +22,7 @@ export default function Discuss() {
     try {
       await totalPostsNeurela();
       const take = pageSize;
-      const skip = (page - 1)*pageSize;
+      const skip = (page - 1) * pageSize;
       const url = `https://ap-south-1.aws.neurelo.com/rest/posts?take=${take}&skip=${skip}`;
       await axios
         .get(url, {
@@ -58,48 +58,6 @@ export default function Discuss() {
     }
   };
 
-  const handleLike = async (postId) => {
-    try {
-      await axios.post(
-        "https://ap-south-1.aws.neurelo.com/custom/like",
-        { user: user._id, post: postId },
-        {
-          headers: {
-            "X-API-KEY":
-              "neurelo_9wKFBp874Z5xFw6ZCfvhXfqsIq3xJ9PprY34l/iG73FoDsm1a2toCQDCyYKxmX/dsN7wfPE0jdstsxWXvbh9xs8js4Qni9UYDGcQW0R8srkVnZ/nxtGC8ZWIYt84ahXJwzmaE6hVzEZW6Udhqf7rSPnxuLPr6es8eW6vpL3SmhtRKYVULlVYEKkfJQSUTz+8_Hcv2on0WPHJ12Q3KWGRTOBOKgv4NA5tBfA+I/XqQCX8=",
-          },
-        }
-      );
-      setLikesAndDislikes(!likesAndDislikes);
-    } catch (error) {
-      console.log(error);
-      alert("Error");
-    }
-  };
-
-  const handleDislike = async (postId) => {
-    try {
-      await axios
-        .post(
-          "https://ap-south-1.aws.neurelo.com/custom/dislike",
-          { user: user._id, post: postId },
-          {
-            headers: {
-              "X-API-KEY":
-                "neurelo_9wKFBp874Z5xFw6ZCfvhXfqsIq3xJ9PprY34l/iG73FoDsm1a2toCQDCyYKxmX/dsN7wfPE0jdstsxWXvbh9xs8js4Qni9UYDGcQW0R8srkVnZ/nxtGC8ZWIYt84ahXJwzmaE6hVzEZW6Udhqf7rSPnxuLPr6es8eW6vpL3SmhtRKYVULlVYEKkfJQSUTz+8_Hcv2on0WPHJ12Q3KWGRTOBOKgv4NA5tBfA+I/XqQCX8=",
-            },
-          }
-        )
-        .catch((err) => {
-          console.log(err);
-        });
-      setLikesAndDislikes(!likesAndDislikes);
-    } catch (error) {
-      console.log(error);
-      alert("Error");
-    }
-  };
-
   return posts ? (
     <>
       <div className="w-full mt-6 flex items-center flex-col gap-5">
@@ -115,34 +73,29 @@ export default function Discuss() {
         </div>
         <div className="w-4/5 gap-12 flex justify-center flex-wrap">
           {posts.map((item, index) => {
-            return (
-              <UserPostCard
-                handleLike={handleLike}
-                handleDislike={handleDislike}
-                data={item}
-                key={index}
-              />
-            );
+            return <UserPostCard data={item} key={index} />;
           })}
         </div>
         <div className="w-[70%]">
           <div className="flex justify-between">
             <div className="px-5 py-2">Page {page}</div>
             <div className="flex gap-10 justify-end">
-              <button
-                className="bg-black text-white px-5 py-2 rounded-md"
-                disabled={page == 1}
-                onClick={() => setPage(page - 1)}
-              >
-                {"<-"} Prev
-              </button>
-              <button
-                disabled={page >= totalPosts / pageSize}
-                onClick={() => setPage(page + 1)}
-                className="bg-black text-white px-5 py-2 rounded-md"
-              >
-                Next {"->"}
-              </button>
+              {page != 1 && (
+                <button
+                  className="bg-black text-white px-5 py-2 rounded-md"
+                  onClick={() => setPage(page - 1)}
+                >
+                  {"<-"} Prev
+                </button>
+              )}
+              {!(page >= totalPosts / pageSize) && (
+                <button
+                  onClick={() => setPage(page + 1)}
+                  className="bg-black text-white px-5 py-2 rounded-md"
+                >
+                  Next {"->"}
+                </button>
+              )}
             </div>
           </div>
         </div>
