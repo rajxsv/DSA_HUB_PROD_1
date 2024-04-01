@@ -15,7 +15,7 @@ export default function SignUp() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://api-2mwu.onrender.com/register", {
+      const response = await axios.post("https://api-dqmy.onrender.com/register", {
         username,
         email,
         password,

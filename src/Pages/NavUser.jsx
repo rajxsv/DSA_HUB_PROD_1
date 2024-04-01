@@ -33,7 +33,7 @@ const NavUser = () => {
     try {
       logout();
       const { data, status } = await axios.delete(
-        "https://api-2mwu.onrender.com/user/logout"
+        "https://api-dqmy.onrender.com/logout"
       );
       if (status == "200") {
         alert("Done");

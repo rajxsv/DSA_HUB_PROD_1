@@ -18,7 +18,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data, status } = await axios
-        .post("https://api-2mwu.onrender.com/login", {
+        .post("https://api-dqmy.onrender.com/login", {
           email,
           password,
         })
