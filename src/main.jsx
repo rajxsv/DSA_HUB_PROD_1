@@ -14,6 +14,7 @@ import AddProblem from "./Pages/AddProblem";
 import EditProblem from "./Pages/EditProblem";
 import Discuss from "./Pages/Discuss";
 import AddPost from "./Pages/AddPost";
+import { Post } from "./Pages/Post";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,9 @@ const router = createBrowserRouter([
       {
         path: "/discuss/addpost",
         element: <AddPost />,
+      } , {
+        path: "/post?",
+        element: <Post />
       }
     ],
   }

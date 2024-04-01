@@ -10,7 +10,25 @@ html , body{
     margin: 0;
     font-family: 'JetBrains Mono', monospace;
     font-size: small;
+    height: auto;
 }
+
+.black-and-white-theme {
+    color: #ffffff;
+    background-color: #000000; 
+    padding: 20px; 
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 20px; 
+  }
+  
+  .body {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+  
 
 #root {
     height:100%;
