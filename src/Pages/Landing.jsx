@@ -27,11 +27,6 @@ function Landing() {
           <p className="text-lg">
             Join our community, solve problems, and level up your coding skills.
           </p>
-          <Link to={"/signup"}>
-            <button className="mt-6 px-8 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-              Sign Up Now !
-            </button>
-          </Link>
         </section>
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-4 text-white">Features</h2>
