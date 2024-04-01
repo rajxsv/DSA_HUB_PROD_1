@@ -31,7 +31,7 @@ export default function UserPostCard({
     array.forEach((item) => (count += item.post == id));
     return count;
   };
-  
+
   useEffect(() => {
     try {
       const fetchData = async () => {

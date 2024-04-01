@@ -17,13 +17,14 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { data, status } = await axios.post(
-        "https://api-2mwu.onrender.com/login",
-        {
+      const { data, status } = await axios
+        .post("https://api-2mwu.onrender.com/login", {
           email,
           password,
-        },
-      );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
       if (status == 200) {
         console.log(data.user.email);
