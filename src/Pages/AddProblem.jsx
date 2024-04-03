@@ -124,12 +124,11 @@ export default function AddProblem() {
               htmlFor="tag"
               className="block mt-6 text-sm font-medium leading-6 text-gray-900"
             >
-              Topic
+              Tags
             </label>
-
             <div className="mt-2 flex flex-col gap-3 ">
               <div className="flex gap-2">
-                {tags && tags.map((item, index) => <p key={index}>{item}</p>)}
+                {tags && tags.map((item, index) => <p className="p-2 bg-gray-100 mb-2" key={index}>{item}</p>)}
               </div>
               <div className="flex gap-4">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -139,7 +138,7 @@ export default function AddProblem() {
                     type="text"
                     placeholder="tag"
                     value={tag}
-                    onChange={(e) => setTag(e.target.value)}
+                    onChange={(e) => setTags(e.target.value)}
                   />
                 </div>
                 <button

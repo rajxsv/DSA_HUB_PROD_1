@@ -9,6 +9,19 @@ export default function Info({ problem }) {
 
   console.log(problem);
 
+  const makeTags = (tags) => {
+    if(tags) {
+
+      let tagsWithoutQuotes = "";
+      const n = tags.length;
+      for (let i = 0; i < n; i++) {
+        tagsWithoutQuotes += (tags[i] == '"' || tags[i]=='[' || tags[i]==']') ? "" : tags[i];
+      }
+      return tagsWithoutQuotes.split(" ");
+    }
+    return ""
+  };
+
   return (
     <div className="top-0 min-h-full w-full flex justify-center">
       <div className="w-full p-8">
@@ -30,11 +43,11 @@ export default function Info({ problem }) {
                       key={index}
                       className="bg-gray-700 text-gray-300 py-1 px-2 rounded mr-2 mb-2"
                     >
-                      {item}
+                      {`${makeTags(item)} `}
                     </span>
                   );
                 })
-              : tags}
+              : `${makeTags(tags)} `}
           </div>
         </div>
 

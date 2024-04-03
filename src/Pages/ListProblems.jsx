@@ -5,7 +5,6 @@ import { GreenAlert } from "../componenets/GreenAlert";
 import Loader from "../componenets/Loader";
 import { useUser } from "../UserContext";
 
-
 export default function NewListProblems() {
   const params = new URLSearchParams(document.location.search);
   const [showAlert, setShowAlert] = useState(false);
@@ -15,8 +14,6 @@ export default function NewListProblems() {
   const [page, setPage] = useState(params.get("page") || 1);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState(params.get("query"));
-  const navigate = useNavigate();
-  const url = useParams();
 
   const fetchTotalProblemsNeurela = async () => {
     try {
@@ -43,7 +40,7 @@ export default function NewListProblems() {
       await fetchTotalProblemsNeurela();
       const take = pageSize;
       const skip = (page - 1) * pageSize;
-      const url = `https://ap-south-1.aws.neurelo.com/rest/problems?take=${take}&skip=${skip}`;
+      const url = `https://ap-south-1.aws.neurelo.com/rest/problems?order_by=[{"title":"asc"}]&take=${take}&skip=${skip}`;
       await axios
         .get(url, {
           headers: {
@@ -76,16 +73,21 @@ export default function NewListProblems() {
           const data = res.data.data;
           setProblems(data);
         });
+
       await axios
-        .get("https://ap-south-1.aws.neurelo.com/rest/problems", {
-          headers: {
-            "X-API-KEY":
-              "neurelo_9wKFBp874Z5xFw6ZCfvhXfqsIq3xJ9PprY34l/iG73FoDsm1a2toCQDCyYKxmX/dsN7wfPE0jdstsxWXvbh9xs8js4Qni9UYDGcQW0R8srkVnZ/nxtGC8ZWIYt84ahXJwzmaE6hVzEZW6Udhqf7rSPnxuLPr6es8eW6vpL3SmhtRKYVULlVYEKkfJQSUTz+8_Hcv2on0WPHJ12Q3KWGRTOBOKgv4NA5tBfA+I/XqQCX8=",
-          },
-          params: {
-            filter: JSON.stringify({ title: { startsWith: search } }),
-          },
-        })
+        .get(
+          'https://ap-south-1.aws.neurelo.com/rest/problems?order_by=[{"title":"asc"}]',
+          {
+            headers: {
+              "X-API-KEY":
+                "neurelo_9wKFBp874Z5xFw6ZCfvhXfqsIq3xJ9PprY34l/iG73FoDsm1a2toCQDCyYKxmX/dsN7wfPE0jdstsxWXvbh9xs8js4Qni9UYDGcQW0R8srkVnZ/nxtGC8ZWIYt84ahXJwzmaE6hVzEZW6Udhqf7rSPnxuLPr6es8eW6vpL3SmhtRKYVULlVYEKkfJQSUTz+8_Hcv2on0WPHJ12Q3KWGRTOBOKgv4NA5tBfA+I/XqQCX8=",
+            },
+            params: {
+              filter: JSON.stringify({ title: { startsWith: search } }),
+              order_by: JSON.stringify([{ title: "asc" }]),
+            },
+          }
+        )
         .then((res) => {
           const data = res.data.data;
           setTotalProblems(data.length);
@@ -97,7 +99,7 @@ export default function NewListProblems() {
   };
 
   useEffect(() => {
-    setProblems(null)
+    setProblems(null);
     const load = async () => {
       if (search) {
         await handleSearch();
@@ -108,6 +110,18 @@ export default function NewListProblems() {
     };
     load();
   }, [page]);
+
+  const makeTag = (tags) => {
+    if (tags) {
+      let tagsWithoutQuotes = "";
+      const n = tags.length;
+      for (let i = 0; i < n; i++) {
+        tagsWithoutQuotes += tags[i] == '"' ? "" : tags[i];
+      }
+      return tagsWithoutQuotes.split(" ");
+    }
+    return "";
+  };
 
   return problems ? (
     <section className="w-4/5 mt-6 mx-auto px-4 py-4">
@@ -220,11 +234,12 @@ export default function NewListProblems() {
                           )}
                         </td>
                         <td className="flex justify-between whitespace-nowrap px-4 py-4 text-sm text-gray-500">
-                          {item.tags}
+                          {item.tags &&
+                            makeTag(item.tags).map((item) => `${item} `)}
                         </td>
                         <td>
                           <p className="flex justify-between whitespace-nowrap px-4 py-4 text-sm text-gray-500">
-                            {item._id}
+                            {item.id}
                           </p>
                         </td>
                         <td className="flex justify-evenly">

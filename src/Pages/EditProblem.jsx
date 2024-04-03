@@ -8,24 +8,77 @@ export default function EditProblem() {
 
   const [title, setTitle] = useState(state.title);
   const [desc, setDesc] = useState(state.description);
-  const [link, setLink] = useState(state.links);
-  const [tags, setTags] = useState(state.tags);
+  const [link, setLink] = useState(
+    state.links.slice(1, state.links.length - 1)
+  );
   const [done, setDone] = useState(state.done);
+  const [tag, setTag] = useState();
   const [edited, setEdited] = useState(false);
   const id = state.id;
   const navigate = useNavigate();
 
+  const makeTags = (tags) => {
+    let tagsWithoutQuotes = "";
+    const n = tags.length;
+    for (let i = 0; i < n; i++) {
+      tagsWithoutQuotes += tags[i] == '"' ? "" : tags[i];
+    }
+    return tagsWithoutQuotes.split(" ");
+  };
+
+  const [tags, setTags] = useState(makeTags(state.tags));
+
+  const handleTags = (e) => {
+    if (tag) {
+      setTags([...tags, tag]);
+      setTag("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const problem = {
-      title,
-      desceiption: desc,
-      tags,
-      links: link,
-      done,
-    };
-    console.log(id);
-    const url = `https://ap-south-1.aws.neurelo.com/rest/problems/${id}`;
+
+    await axios
+      .delete(`https://ap-south-1.aws.neurelo.com/rest/problems/${id}`, {
+        headers: {
+          "X-API-KEY":
+            "neurelo_9wKFBp874Z5xFw6ZCfvhXfqsIq3xJ9PprY34l/iG73FoDsm1a2toCQDCyYKxmX/dsN7wfPE0jdstsxWXvbh9xs8js4Qni9UYDGcQW0R8srkVnZ/nxtGC8ZWIYt84ahXJwzmaE6hVzEZW6Udhqf7rSPnxuLPr6es8eW6vpL3SmhtRKYVULlVYEKkfJQSUTz+8_Hcv2on0WPHJ12Q3KWGRTOBOKgv4NA5tBfA+I/XqQCX8=",
+        },
+      })
+      .then(() => {
+        axios
+          .post(
+            "https://ap-south-1.aws.neurelo.com/rest/problems/__one",
+            {
+              title,
+              description: desc,
+              tags,
+              links: link,
+              done: false,
+            },
+            {
+              headers: {
+                "X-API-KEY":
+                  "neurelo_9wKFBp874Z5xFw6ZCfvhXfqsIq3xJ9PprY34l/iG73FoDsm1a2toCQDCyYKxmX/dsN7wfPE0jdstsxWXvbh9xs8js4Qni9UYDGcQW0R8srkVnZ/nxtGC8ZWIYt84ahXJwzmaE6hVzEZW6Udhqf7rSPnxuLPr6es8eW6vpL3SmhtRKYVULlVYEKkfJQSUTz+8_Hcv2on0WPHJ12Q3KWGRTOBOKgv4NA5tBfA+I/XqQCX8=",
+              },
+            }
+          )
+          .then(() => {
+            setEdited(true);
+            setTimeout(() => {
+              setEdited(false);
+              navigate("/content/list");
+            }, 2 * 1000);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // const url = `https://ap-south-1.aws.neurelo.com/rest/problems/${id}`;
     await axios
       .patch(
         url,
@@ -45,6 +98,7 @@ export default function EditProblem() {
         }, 2 * 1000);
       })
       .catch((err) => {
+        console.log(err);
         alert("There was some problem sending request");
       });
   };
@@ -110,18 +164,32 @@ export default function EditProblem() {
               htmlFor="tag"
               className="block mt-6 text-sm font-medium leading-6 text-gray-900"
             >
-              Topic
+              Tags
             </label>
             <div className="mt-2">
+              <div className="flex gap-1">
+                {tags &&
+                  tags.map((item, index) => (
+                    <p className="bg-gray-100 p-2 mb-2" key={index}>
+                      {item}
+                    </p>
+                  ))}
+              </div>
               <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input
                   className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  required={true}
                   type="text"
+                  value={tag}
                   placeholder="tags"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
+                  onChange={(e) => setTag(e.target.value)}
                 />
+                <button
+                  className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm "
+                  onClick={handleTags}
+                  type="button"
+                >
+                  Add
+                </button>
               </div>
             </div>
             <label
@@ -136,8 +204,8 @@ export default function EditProblem() {
                   className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   required={true}
                   type="url"
-                  placeholder="Links"
                   value={link}
+                  placeholder="Links"
                   onChange={(e) => setLink(e.target.value)}
                 />
               </div>
