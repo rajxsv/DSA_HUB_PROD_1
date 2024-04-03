@@ -17,7 +17,7 @@ export default function UserPostCard({ key, data }) {
     (
       <Card
         key={key}
-        className="mt-6 overflow-hidden w-96 border-solid border-2"
+        className="mt-6 overflow-hidden w-96 h-26 border-solid border-2"
       >
         <CardBody>
           <div className="flex justify-between">
@@ -25,13 +25,13 @@ export default function UserPostCard({ key, data }) {
               {"</>"}
             </p>
           </div>
-          <Typography variant="h5" color="blue-gray" className="mb-2">
+          <Typography variant="h6" color="blue-gray" className="h-15 overflow-hidden mb-2">
             {title}
           </Typography>
-          <Typography>{body}</Typography>
+          <Typography className="max-h-20 overflow-clip" >{body}</Typography>
         </CardBody>
-        <CardFooter className=" bg-gray-100 rounded-lg m-3 items-center ">
-          <div className="flex justify-between ">
+        <CardFooter className=" bg-gray-100 rounded-lg m-3 items-center">
+          <div className="flex justify-between">
             <a href="#" className="inline-block">
               <Link to={`/post?id=${id}`} >
                 <Button
@@ -60,20 +60,6 @@ export default function UserPostCard({ key, data }) {
           </div>
         </CardFooter>
       </Card>
-    ) || (
-      <div
-        key={key}
-        className="shadow-md border-solid border-2 m-2 p-3 rounded-lg max-h-[70px] min-h-[12rem] flex flex-col justify-evenly"
-      >
-        <div>
-          <div className="font-extrabold text-2xl flex justify-between">
-            <div>{title}</div>
-          </div>
-          <div>{user.username}</div>
-          <div></div>
-        </div>
-        <div className="max-h-20 overflow-hidden">{body}</div>
-      </div>
     )
   );
 }

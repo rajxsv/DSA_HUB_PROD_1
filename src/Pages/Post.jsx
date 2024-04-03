@@ -37,7 +37,7 @@ export function Post() {
   };
 
   return (
-    <div className="w-full flex m-10 flex-col items-center border border-solid">
+    <div className="w-full flex flex-col items-center">
       <div className="m-20 text-bold w-4/5 text-4xl leading-7 font-bold mb-6">Post</div>
       {loading ? (
         <Loader />

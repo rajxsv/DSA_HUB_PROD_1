@@ -61,12 +61,12 @@ export default function Discuss() {
   return posts ? (
     <>
       <div className="w-full mt-6 flex items-center flex-col gap-5">
-        <div className="flex justify-center gap-[56rem]">
+        <div className="w-4/5 flex justify-between">
           <div className="m-3 text-bold text-4xl leading-7 font-bold">
             Discuss
           </div>
           <Link to={"/discuss/addpost"}>
-            <button className="bg-black text-white p-3 rounded-md flex">
+            <button className="bg-black text-white p-3 rounded-md">
               Add Post
             </button>
           </Link>
