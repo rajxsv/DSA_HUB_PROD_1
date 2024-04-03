@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { useUser } from "../UserContext";
 import Loader from "../componenets/Loader";
 import { GreenAlert } from "../componenets/GreenAlert";
+import { useNavigate } from "react-router-dom";
 
 export default function AddPost() {
   const [showAlert, setShowAlert] = useState(false);
   const [load, setLoad] = useState(false);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const { user } = useUser();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoad(true);
@@ -18,7 +19,7 @@ export default function AddPost() {
         .post(
           "https://ap-south-1.aws.neurelo.com/rest/posts/__one",
           {
-            user: user._id,
+            // user: user._id,
             title,
             body,
           },
@@ -41,10 +42,11 @@ export default function AddPost() {
     }
     setLoad(false);
   };
-  
+
   const timeoutFn = () => {
     setTimeout(() => {
       setShowAlert(false);
+      navigate("/discuss");
     }, 2 * 1000);
   };
 
@@ -110,7 +112,7 @@ export default function AddPost() {
           </div>
         </div>
         {showAlert ? (
-          <GreenAlert message={"Problem Added"} />
+          <GreenAlert message={"Post Added"} />
         ) : (
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { GreenAlert } from "../componenets/GreenAlert";
 import Loader from "../componenets/Loader";
-import { useUser } from "../UserContext";
+
 
 export default function NewListProblems() {
   const params = new URLSearchParams(document.location.search);
@@ -14,7 +14,7 @@ export default function NewListProblems() {
   const [page, setPage] = useState(params.get("page") || 1);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState(params.get("query"));
-
+  const navigate = useNavigate()
   const fetchTotalProblemsNeurela = async () => {
     try {
       await axios
@@ -30,6 +30,7 @@ export default function NewListProblems() {
         .catch((err) => {
           console.log(err);
         });
+        if(page>(totalProblems/pageSize+1) || page<0) navigate('/')
     } catch (error) {
       console.log(error);
     }
