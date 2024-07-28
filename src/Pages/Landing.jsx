@@ -11,7 +11,6 @@ function Landing() {
 
   return (
     <div className="bg-black h-full">
-      <Banner message={"Join Us Now!"} link={"https://github.com/rajxsv/Coding-Hub"}/>
       <div className="container mx-auto py-8">
         <div className="text-center mb-8 flex flex-col gap-4">
           <h1 className="text-8xl font-bold text-white">Coding Hub</h1>
